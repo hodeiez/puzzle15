@@ -1,28 +1,30 @@
 package puzzle15;
-/*
 import javafx.application.Application;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
 import javafx.scene.image.Image;
 
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 
 import javafx.scene.shape.Rectangle;
 
 import javafx.stage.Stage;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Random;
 
 public class Main extends Application {
-    List<Rectangle> tilesList = new ArrayList<>();
+    ArrayList<Rectangle> tilesList = new ArrayList<>();
     private int rows = 4;
     private int columns = 4;
     URL netImageHodei;
@@ -34,6 +36,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
     URL netImageJohan;
 
     {
@@ -50,20 +53,19 @@ public class Main extends Application {
 
         //Image image = new Image("urazpin.jpg",400,400,false,false);
 
-        Image image =new Image(String.valueOf(netImageJohan));
+        Image image = new Image(String.valueOf(netImageJohan));
         PixelReader px = image.getPixelReader();
 
 
-
-         //Pane tiles= new Pane();
         Group tiles = new Group();
-          //GridPane tiles =new GridPane();
-        for (int i = 0; i < columns; i++) {
-            for (int j = 0; j < rows; j++) {
+
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 Rectangle rect = new Rectangle(100 * i, 100 * j, 100, 100);
                 rect.setFill(new ImagePattern(new WritableImage(px, 100 * i, 100 * j, 100, 100)));
 
-                if (i == columns - 1 && j == rows - 1)
+                if (i == rows - 1 && j == columns - 1)
                     rect.setFill(null);
 
                 rect.setArcHeight(10);
@@ -73,19 +75,21 @@ public class Main extends Application {
 
 
         }
-
+        puzzle15Logic.shuffleLocation(tilesList);
         tiles.getChildren().addAll(tilesList);  //prints the List!!!
-
 
 
         Button abutton = new Button();
         abutton.setTranslateY(250);
         abutton.setTranslateX(0);
+//add action to button to shuffle
+        abutton.setOnAction(actionEvent -> {puzzle15Logic.shuffleLocation(tilesList);
+            System.out.println("X location= " + tilesList.get(0).getX()+ " Y location= "+tilesList.get(0).getY());});
 
         //Fix style to print it!!
-        abutton.setStyle("-fx-background-color: #d2d09d");
-        abutton.setStyle("-fx-arc-height: 10;-fx-arc-width: 10");
-        abutton.setStyle("-fx-border-color: #403e3e");
+        //abutton.setStyle("-fx-background-color: #989642");//"-fx-arc-height: 10;-fx-arc-width: 10;");
+        //  abutton.setStyle("-fx-arc-height: 10;-fx-arc-width: 10");
+        abutton.setStyle("-fx-border-color: #fa2241");
         abutton.setText("REPLAY");
 
         StackPane pn = new StackPane();
@@ -102,11 +106,34 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(pn, 600, 600));
         primaryStage.show();
     }
-    // TextField test=new TextField("FDAKFDAMFLKA");
+/*
+    //Johans metod
+    public void shuffle() {
 
+        Random rnd = new Random();
 
+        for (int i = 0; i < 10000; i++) {
+
+            int tmp1 = rnd.nextInt(tilesList.size());
+            int tmp2 = rnd.nextInt(tilesList.size());
+
+            if ((tmp1 != tmp2) && (tilesList.get(tmp1).getFill() != null && tilesList.get(tmp2).getFill() != null))
+                swap(tilesList.get(tmp1), tilesList.get(tmp2));
+
+        }
+
+    }
+
+    public void swap(Rectangle cellA, Rectangle cellB) {
+
+        Rectangle temp = new Rectangle();
+        temp.setFill(cellA.getFill());
+        cellA.setFill(cellB.getFill());
+        cellB.setFill(temp.getFill());
+
+    }
+*/
     public static void main(String[] args) {
         launch(args);
     }
 }
-*/

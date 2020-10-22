@@ -1,9 +1,8 @@
-package puzzle15Logic;
+package puzzle15;
 
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -16,7 +15,29 @@ import java.util.concurrent.ThreadLocalRandom;
  * Copyright: MIT
  */
 public class puzzle15Logic {
-    public static void shuffle(List<Rectangle> tiles) {
+    public static void shuffleLocation(List<Rectangle> tiles) {
+
+        Random rnd = new Random();
+
+        for (int i = 0; i < 10000; i++) {
+
+            int tmp1 = rnd.nextInt(tiles.size());
+            int tmp2 = rnd.nextInt(tiles.size());
+
+            if ((tmp1 != tmp2) && (tiles.get(tmp1).getFill() != null && tiles.get(tmp2).getFill() != null)) {
+                Rectangle temp = new Rectangle();
+                temp.setX(tiles.get(tmp1).getX());
+                temp.setY(tiles.get(tmp1).getY());
+                tiles.get(tmp1).setX( tiles.get(tmp2).getX());
+                tiles.get(tmp1).setY( tiles.get(tmp2).getY());
+                tiles.get(tmp2).setX(temp.getX());
+                tiles.get(tmp2).setY(temp.getY());
+                // swap(tiles.get(tmp1), tiles.get(tmp2));
+            }
+        }
+
+    }
+    public static void shuffleImage(List<Rectangle> tiles) {
 
         Random rnd = new Random();
 
