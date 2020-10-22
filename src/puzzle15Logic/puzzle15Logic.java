@@ -10,7 +10,7 @@ import java.util.Arrays;
  * Copyright: MIT
  */
 public class puzzle15Logic {
-
+//ändring
 
     public static void main(String[] args) {
         String[] brickor = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "X"};
