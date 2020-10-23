@@ -16,42 +16,43 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 //TODO: create coordinates system using constant references, so, later on is easier to manage
 public class puzzle15Logic {
-    public static void isEmptyTileClose(List<Rectangle> tilesList,int tileIndex){
-        if(tileIndex>=0) {
-//get tile-clicked
+    public static void isEmptyTileClose(List<Rectangle> tilesList, int tileIndex, int tileSize) {
+        if (tileIndex >= 0) {
             Rectangle clickedTile = tilesList.get(tileIndex);
-            //get empty tile
             Rectangle emptyTile = tilesList.get(tilesList.size() - 1);
-            //is empty tile in tileclickedX-100 ||tilelickedY+100 || tileClikedY-100||tileClickedY+100
-            //then swap empty with clickedtile
 
-//TODO: fix this chaos, swaps diagonals or othe tiles far away
-            if (clickedTile.getX() - 100 == emptyTile.getX() ||
-                    clickedTile.getX() + 100 == emptyTile.getX() ||
-                    clickedTile.getY() - 100 == emptyTile.getY() ||
-                    clickedTile.getY() + 100 == emptyTile.getY()){
+            if ((clickedTile.getX() == emptyTile.getX()
+                    && (clickedTile.getY() - tileSize == emptyTile.getY() || clickedTile.getY() + tileSize == emptyTile.getY())) ||
+                    (clickedTile.getY() == emptyTile.getY()
+                            && (clickedTile.getX() - tileSize == emptyTile.getX() || clickedTile.getX() + tileSize == emptyTile.getX()))){
+
                 System.out.println("found");
-                swapLocation(clickedTile, emptyTile);}
+            swapLocation(clickedTile, emptyTile);
         }
     }
-    public static int whichIndexIsHere(List<Rectangle> tilesList,double x,double y){
+
+}
+
+    public static int whichIndexIsHere(List<Rectangle> tilesList, double x, double y, int tileSize) {
         //normalize values
-        x-=(x%100)+100;
-        y-=(y%100)+100;
+        x -= (x % tileSize) + tileSize;
+        y -= (y % tileSize) + tileSize;
         //check if a rectangle is there
-        for(Rectangle r:tilesList){
-            if(r.getX()==x&&r.getY()==y){
+        for (Rectangle r : tilesList) {
+            if (r.getX() == x && r.getY() == y) {
                 System.out.println("Index n=" + tilesList.indexOf(r));
-                System.out.println("x value=" + r.getX()+ " y value=" + r.getY());
-            return tilesList.indexOf(r);}
+                System.out.println("x value=" + r.getX() + " y value=" + r.getY() + "\n" + "and clicked x: " + x + " and clicked y: " + y);
+                return tilesList.indexOf(r);
+            }
         }
-        return-1;
+        return -1;
     }
+
     public static void shuffleLocation(List<Rectangle> tiles) {
 
         Random rnd = new Random();
 
-        for (int i = 0; i < tiles.size()*4; i++) {
+        for (int i = 0; i < tiles.size() * 4; i++) {
 
             int tmp1 = rnd.nextInt(tiles.size());
             int tmp2 = rnd.nextInt(tiles.size());
@@ -62,8 +63,9 @@ public class puzzle15Logic {
         }
 
     }
-    public static void swapLocation(Rectangle tmp1,Rectangle tmp2){
-        Rectangle temp=new Rectangle();
+
+    public static void swapLocation(Rectangle tmp1, Rectangle tmp2) {
+        Rectangle temp = new Rectangle();
         temp.setX(tmp1.getX());
         temp.setY(tmp1.getY());
         tmp1.setX(tmp2.getX());
@@ -71,24 +73,26 @@ public class puzzle15Logic {
         tmp2.setX(temp.getX());
         tmp2.setY(temp.getY());
     }
-    public static void swapImage(Rectangle tmp1,Rectangle tmp2){
-        Rectangle temp=new Rectangle();
+
+    public static void swapImage(Rectangle tmp1, Rectangle tmp2) {
+        Rectangle temp = new Rectangle();
         temp.setFill(tmp1.getFill());
 
         tmp1.setFill(tmp2.getFill());
         tmp2.setFill(temp.getFill());
     }
+
     public static void shuffleImage(List<Rectangle> tiles) {
 
         Random rnd = new Random();
 
-        for (int i = 0; i < tiles.size()*4; i++) {
+        for (int i = 0; i < tiles.size() * 4; i++) {
 
             int tmp1 = rnd.nextInt(tiles.size());
             int tmp2 = rnd.nextInt(tiles.size());
 
             if ((tmp1 != tmp2) && (tiles.get(tmp1).getFill() != null && tiles.get(tmp2).getFill() != null)) {
-               swapImage(tiles.get(tmp1),tiles.get(tmp2));
+                swapImage(tiles.get(tmp1), tiles.get(tmp2));
 
             }
         }
@@ -119,7 +123,7 @@ public class puzzle15Logic {
 
     //metod som byter plats på vald bricka och tomma platsen.
     //inparameter: en plats i arrayen där en bricka finns placerad.
-    public List<String> changePlace (List<String> brickArray, int indexOfChoosenBrick){
+    public List<String> changePlace(List<String> brickArray, int indexOfChoosenBrick) {
         //1. Är det en godkänd bricka?
 
         //placering av 0
@@ -127,30 +131,14 @@ public class puzzle15Logic {
         for (int i = 0; i < brickArray.size(); i++)
             if (brickArray.get(i).equalsIgnoreCase("0"))
                 indexOfX = i;
-return brickArray;
-}
-
-
-
-
-
-
-
-
-
-
+        return brickArray;
+    }
 
 
     public static void main(String[] args) {
 
         puzzle15Logic puzzle = new puzzle15Logic();
         List<String> brickArray = puzzle.randomBricks();
-
-
-
-
-
-
 
 
         String[] brickor = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "X"};
