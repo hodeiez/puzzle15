@@ -1,6 +1,6 @@
 package puzzle15;
 
-import com.sun.javafx.scene.control.LabeledText;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;

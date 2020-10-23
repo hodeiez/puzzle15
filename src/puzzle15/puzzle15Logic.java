@@ -21,7 +21,6 @@ public class puzzle15Logic {
         int index=0;
         for(int x=0;x<tileSize*columns;x+=tileSize){
             for(int y=0;y<tileSize*rows;y+=tileSize){
-                System.out.println("index " + index + "x value "+ x + "y value " + y);
                 if((tilesList.get(index).getX()==x && tilesList.get(index).getY()==y)&&tilesList.get(tilesList.size()-1).getFill()==null)
                     check=true;
                 else
@@ -54,11 +53,8 @@ public class puzzle15Logic {
         y -= (y % tileSize) + tileSize;
         //check if a rectangle is there
         for (Rectangle r : tilesList) {
-            if (r.getX() == x && r.getY() == y) {
-                System.out.println("Index n=" + tilesList.indexOf(r));
-                System.out.println("x value=" + r.getX() + " y value=" + r.getY() + "\n" + "and clicked x: " + x + " and clicked y: " + y);
+            if (r.getX() == x && r.getY() == y)
                 return tilesList.indexOf(r);
-            }
         }
         return -1;
     }
@@ -113,7 +109,7 @@ public class puzzle15Logic {
         }
 
     }
-
+/*
     //metod som slumpar ut brickorna.
     public List<String> randomBricks() {
         List<String> randomBricks = new ArrayList<>();
@@ -178,5 +174,5 @@ public class puzzle15Logic {
 
     }
 
-
+*/
 }
