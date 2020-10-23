@@ -1,9 +1,11 @@
 package puzzle15;
 
+import com.sun.javafx.scene.control.LabeledText;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.PixelReader;
@@ -25,8 +27,11 @@ public class Main extends Application {
     public final int tileSize=100;
     private int rows = 4;
     private int columns = 4;
+    private boolean isSolved;
+    Label message=new Label("Not Solved");
     Group tiles = new Group();
     Button restart = new Button();
+    Button solve=new Button("Solve");
     StackPane mainPane = new StackPane();
     URL netImageHodei;
 
@@ -54,11 +59,15 @@ public class Main extends Application {
 
 //create the board and add to Group
         createBoard();
+        //puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
 
-//button for restart/shuffle
-
+//setting in pplace
         restart.setTranslateY(250);
         restart.setTranslateX(0);
+        solve.setTranslateY(280);
+        solve.setTranslateX(0);
+        message.setTranslateY(-250);
+        message.setTranslateX(0);
 
 
 
@@ -72,19 +81,24 @@ public class Main extends Application {
 
 //add action to pane
         tiles.setOnMouseClicked(e -> {
-            System.out.println("Mouse Y coordinate= " + e.getSceneX());
-            System.out.println("Mouse X coordinate= " + e.getSceneY());
             puzzle15Logic.isEmptyTileClose(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getSceneX(), e.getSceneY(),tileSize),tileSize);
-
+            isSolved=puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
+            message.setText((isSolved)?"SOLVED":"NOT SOLVED");
         });
         //add action to button to shuffle
         restart.setOnAction(actionEvent -> {
             createBoard(); //make a new clean board before shuffle, so, we mantain the empty tile in its place
             puzzle15Logic.shuffleLocation(tilesList);
         });
+
+        solve.setOnAction(event->{
+            createBoard();
+        });
 //add stuff
         mainPane.getChildren().add(tiles);
         mainPane.getChildren().add(restart);
+        mainPane.getChildren().add(solve);
+        mainPane.getChildren().add(message);
 
         primaryStage.setTitle("Puzzle 15");
 
@@ -96,6 +110,7 @@ public class Main extends Application {
     public void createBoard() {
         Image image = new Image(String.valueOf(netImageHodei), columns * tileSize, rows * tileSize, false, false);
         PixelReader px = image.getPixelReader();
+
         if (tiles.getChildren().containsAll(tilesList)) {
             tiles.getChildren().removeAll(tilesList);
         }

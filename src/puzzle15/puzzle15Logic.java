@@ -14,8 +14,23 @@ import java.util.concurrent.ThreadLocalRandom;
  * Project: puzzle15
  * Copyright: MIT
  */
-//TODO: create coordinates system using constant references, so, later on is easier to manage
+
 public class puzzle15Logic {
+    public static boolean isSolved(List<Rectangle>tilesList, int tileSize,int columns,int rows){
+        boolean check=false;
+        int index=0;
+        for(int x=0;x<tileSize*columns;x+=tileSize){
+            for(int y=0;y<tileSize*rows;y+=tileSize){
+                System.out.println("index " + index + "x value "+ x + "y value " + y);
+                if((tilesList.get(index).getX()==x && tilesList.get(index).getY()==y)&&tilesList.get(tilesList.size()-1).getFill()==null)
+                    check=true;
+                else
+                    check=false;
+                index++;
+            }
+        }
+        return check;
+    }
     public static void isEmptyTileClose(List<Rectangle> tilesList, int tileIndex, int tileSize) {
         if (tileIndex >= 0) {
             Rectangle clickedTile = tilesList.get(tileIndex);
