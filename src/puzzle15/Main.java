@@ -25,8 +25,8 @@ import java.util.Random;
 
 public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
-    private int rows = 8;
-    private int columns = 8;
+    private int rows = 4;
+    private int columns = 4;
     Group tiles = new Group();
     URL netImageHodei;
 
@@ -95,7 +95,7 @@ public class Main extends Application {
     }
 
     public void createBoard() {
-        Image image = new Image(String.valueOf(netImageJohan), rows * 100, columns * 100, false, false);
+        Image image = new Image(String.valueOf(netImageHodei), rows * 100, columns * 100, false, false);
         PixelReader px = image.getPixelReader();
         if (tiles.getChildren().containsAll(tilesList)) {
             tiles.getChildren().removeAll(tilesList);
