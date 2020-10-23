@@ -1,4 +1,5 @@
 package puzzle15;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,16 +15,19 @@ import javafx.scene.shape.Rectangle;
 
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import java.util.Collections;
 import java.util.Random;
 
 public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
     private int rows = 4;
     private int columns = 4;
+    Group tiles = new Group();
     URL netImageHodei;
 
     {
@@ -46,15 +50,57 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        //  Parent tiles = FXMLLoader.load(getClass().getResource("puzzleBoard.fxml"));
 
-        Image image = new Image(String.valueOf(netImageJohan),400,400,false,false);
+
+//create the board and add to Group
+        createBoard();
+        //prints the List!!!
+
+//button for restart/shuffle
+        Button restart = new Button();
+        restart.setTranslateY(250);
+        restart.setTranslateX(0);
+
+
+//add action to button to shuffle
+        restart.setOnAction(actionEvent -> {
+            createBoard(); //make a new clean board before shuffle, so, we mantain the empty tile in its place
+            puzzle15Logic.shuffleLocation(tilesList);
+            System.out.println("X location= " + tilesList.get(0).getX() + " Y location= " + tilesList.get(0).getY());
+        });
+//Styling
+        restart.setStyle("-fx-border-color: #fa2241");
+        restart.setText("REPLAY");
+//create a pane
+        StackPane mainPane = new StackPane();
+        mainPane.setStyle("-fx-background-color: #4a2a2a");
+
+//add action to pane
+        tiles.setOnMouseClicked(e -> {
+            System.out.println("Y coordinate= " + e.getSceneX());
+            System.out.println("X coordinate= " + e.getSceneY());
+            puzzle15Logic.swapLocation(tilesList.get(15), tilesList.get(3));
+        });
+
+        mainPane.getChildren().add(tiles);
+        mainPane.getChildren().add(restart);
+
+        //Parent root = FXMLLoader.load(getClass().getResource("puzzleBoard.fxml"));
+        primaryStage.setTitle("Puzzle 15");
+
+
+        primaryStage.setScene(new Scene(mainPane, 600, 600));
+        primaryStage.show();
+    }
+
+    public void createBoard() {
+        Image image = new Image(String.valueOf(netImageJohan), rows * 100, columns * 100, false, false);
         PixelReader px = image.getPixelReader();
-
-
-        Group tiles = new Group();
-
-
+        if (tiles.getChildren().containsAll(tilesList)) {
+            tiles.getChildren().removeAll(tilesList);
+        }
+        if (tilesList.size() > 0)
+            tilesList.clear();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Rectangle rect = new Rectangle(100 * i, 100 * j, 100, 100);
@@ -67,38 +113,9 @@ public class Main extends Application {
                 rect.setArcWidth(10);
                 tilesList.add(rect);
             }
-
-
         }
-        puzzle15Logic.shuffleLocation(tilesList);
-        tiles.getChildren().addAll(tilesList);  //prints the List!!!
 
-
-        Button abutton = new Button();
-        abutton.setTranslateY(250);
-        abutton.setTranslateX(0);
-
-
-//add action to button to shuffle
-        abutton.setOnAction(actionEvent -> {puzzle15Logic.shuffleLocation(tilesList);
-            System.out.println("X location= " + tilesList.get(0).getX()+ " Y location= "+tilesList.get(0).getY());});
-
-        abutton.setStyle("-fx-border-color: #fa2241");
-        abutton.setText("REPLAY");
-
-        StackPane pn = new StackPane();
-        pn.setStyle("-fx-background-color: #4a2a2a");
-
-
-        pn.getChildren().add(tiles);
-        pn.getChildren().add(abutton);
-
-        //Parent root = FXMLLoader.load(getClass().getResource("puzzleBoard.fxml"));
-        primaryStage.setTitle("Puzzle 15");
-
-
-        primaryStage.setScene(new Scene(pn, 600, 600));
-        primaryStage.show();
+        tiles.getChildren().addAll(tilesList);
     }
 
     public static void main(String[] args) {

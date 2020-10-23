@@ -36,8 +36,15 @@ public class puzzle15Logic {
         temp.setY(tmp1.getY());
         tmp1.setX(tmp2.getX());
         tmp1.setY(tmp2.getY());
-        tmp2.setX(tmp2.getX());
-        tmp2.setY(tmp2.getY());
+        tmp2.setX(temp.getX());
+        tmp2.setY(temp.getY());
+    }
+    public static void swapImage(Rectangle tmp1,Rectangle tmp2){
+        Rectangle temp=new Rectangle();
+        temp.setFill(tmp1.getFill());
+
+        tmp1.setFill(tmp2.getFill());
+        tmp2.setFill(temp.getFill());
     }
     public static void shuffleImage(List<Rectangle> tiles) {
 
@@ -49,11 +56,8 @@ public class puzzle15Logic {
             int tmp2 = rnd.nextInt(tiles.size());
 
             if ((tmp1 != tmp2) && (tiles.get(tmp1).getFill() != null && tiles.get(tmp2).getFill() != null)) {
-                Rectangle temp = new Rectangle();
-                temp.setFill(tiles.get(tmp1).getFill());
-                tiles.get(tmp1).setFill( tiles.get(tmp2).getFill());
-                tiles.get(tmp2).setFill(temp.getFill());
-               // swap(tiles.get(tmp1), tiles.get(tmp2));
+               swapImage(tiles.get(tmp1),tiles.get(tmp2));
+
             }
         }
 
