@@ -2,6 +2,7 @@ package puzzle15;
 
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,9 +31,10 @@ public class Main extends Application {
     private boolean isSolved;
     Label message=new Label("Not Solved");
     Group tiles = new Group();
-    Button restart = new Button();
-    Button solve=new Button("Solve");
+    Button restart = new Button("NEW GAME");
+    Button solve=new Button("SOLVE");
     StackPane mainPane = new StackPane();
+    //BorderPane mainPane = new BorderPane();
     URL netImageHodei;
 
     {
@@ -59,10 +61,12 @@ public class Main extends Application {
 
 //create the board and add to Group
         createBoard();
-        //puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
 
 //setting in pplace
-        restart.setTranslateY(250);
+
+
+
+ restart.setTranslateY(250);
         restart.setTranslateX(0);
         solve.setTranslateY(280);
         solve.setTranslateX(0);
@@ -71,19 +75,22 @@ public class Main extends Application {
 
 
 
+
+
 //Styling
-        restart.setStyle("-fx-faint-focus-color:transparent;-fx-focus-color: transparent;" +
+       restart.setStyle("-fx-faint-focus-color:transparent;-fx-focus-color: transparent;" +
                 "-fx-border-color: transparent;" +
-                "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
-        restart.setText("REPLAY");
+               "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
         mainPane.setStyle("-fx-background-color: #864c4c");
 
 //add action to pane
         tiles.setOnMouseClicked(e -> {
-            puzzle15Logic.isEmptyTileClose(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getSceneX(), e.getSceneY(),tileSize),tileSize);
+            System.out.println(" x " + e.getSceneX() + " y " +e.getSceneY());
+            puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getSceneX(), e.getSceneY(),tileSize),tileSize);
             isSolved=puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
-            message.setText((isSolved)?"SOLVED":"NOT SOLVED");
+            System.out.println(puzzle15Logic.isSolved(tilesList,tileSize,columns,rows));
+            message.setText((isSolved)?"CONGRATS!! YOU WON":"NOT SOLVED");
         });
         //add action to button to shuffle
         restart.setOnAction(actionEvent -> {
@@ -95,11 +102,21 @@ public class Main extends Application {
             createBoard();
         });
 //add stuff
-        mainPane.getChildren().add(tiles);
+      mainPane.getChildren().add(tiles);
         mainPane.getChildren().add(restart);
         mainPane.getChildren().add(solve);
         mainPane.getChildren().add(message);
 
+        /*
+        BorderPane.setAlignment(tiles, Pos.CENTER);
+        BorderPane.setAlignment(restart,Pos.BOTTOM_RIGHT);
+        BorderPane.setAlignment(solve,Pos.BOTTOM_CENTER);
+        BorderPane.setAlignment(message,Pos.TOP_CENTER);
+        mainPane.setCenter(tiles);
+        mainPane.setBottom(restart);
+        mainPane.setBottom(solve);
+        mainPane.setTop(message);
+ */
         primaryStage.setTitle("Puzzle 15");
 
 

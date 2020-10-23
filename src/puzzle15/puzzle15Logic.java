@@ -21,16 +21,23 @@ public class puzzle15Logic {
         int index=0;
         for(int x=0;x<tileSize*columns;x+=tileSize){
             for(int y=0;y<tileSize*rows;y+=tileSize){
-                if((tilesList.get(index).getX()==x && tilesList.get(index).getY()==y)&&tilesList.get(tilesList.size()-1).getFill()==null)
-                    check=true;
-                else
-                    check=false;
+
+                    if ((tilesList.get(index).getX() == x && tilesList.get(index).getY() == y)) {
+                        if(tilesList.get(tilesList.size()-1).getFill()==null){
+                        check = true;}
+                    } else {
+                        check = false;
+                    }
+                System.out.println(index + " " +" x "+ x + " y " + y + " real-->" + " x " +tilesList.get(index).getX() + " y "+ tilesList.get(index).getY());
                 index++;
             }
-        }
+
+
+            }
+
         return check;
     }
-    public static void isEmptyTileClose(List<Rectangle> tilesList, int tileIndex, int tileSize) {
+    public static void isEmptyTileNear(List<Rectangle> tilesList, int tileIndex, int tileSize) {
         if (tileIndex >= 0) {
             Rectangle clickedTile = tilesList.get(tileIndex);
             Rectangle emptyTile = tilesList.get(tilesList.size() - 1);
@@ -84,7 +91,7 @@ public class puzzle15Logic {
         tmp2.setX(temp.getX());
         tmp2.setY(temp.getY());
     }
-
+/*
     public static void swapImage(Rectangle tmp1, Rectangle tmp2) {
         Rectangle temp = new Rectangle();
         temp.setFill(tmp1.getFill());
@@ -109,7 +116,7 @@ public class puzzle15Logic {
         }
 
     }
-/*
+
     //metod som slumpar ut brickorna.
     public List<String> randomBricks() {
         List<String> randomBricks = new ArrayList<>();
