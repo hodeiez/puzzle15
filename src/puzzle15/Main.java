@@ -79,13 +79,13 @@ public class Main extends Application {
         tiles.setOnMouseClicked(e -> {
             System.out.println("Y coordinate= " + e.getSceneX());
             System.out.println("X coordinate= " + e.getSceneY());
+           puzzle15Logic.showWhichTileIsHere(tilesList,e.getSceneX(),e.getSceneY());
             puzzle15Logic.swapLocation(tilesList.get(15), tilesList.get(3));
         });
 
         mainPane.getChildren().add(tiles);
         mainPane.getChildren().add(restart);
 
-        //Parent root = FXMLLoader.load(getClass().getResource("puzzleBoard.fxml"));
         primaryStage.setTitle("Puzzle 15");
 
 

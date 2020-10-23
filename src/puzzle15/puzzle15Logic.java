@@ -15,6 +15,17 @@ import java.util.concurrent.ThreadLocalRandom;
  * Copyright: MIT
  */
 public class puzzle15Logic {
+
+    public static void showWhichTileIsHere(List<Rectangle> tilesList,double x,double y){
+        //normalize values
+        x-=(x%100)+100;
+        y-=(y%100)+100;
+        //check if a rectangle is there
+        for(Rectangle r:tilesList){
+            if(r.getX()==x&&r.getY()==y)
+                System.out.println("x value=" + r.getX()+ " y value=" + r.getY());
+        }
+    }
     public static void shuffleLocation(List<Rectangle> tiles) {
 
         Random rnd = new Random();
