@@ -77,6 +77,8 @@ public class Main extends Application {
         Button abutton = new Button();
         abutton.setTranslateY(250);
         abutton.setTranslateX(0);
+
+
 //add action to button to shuffle
         abutton.setOnAction(actionEvent -> {puzzle15Logic.shuffleLocation(tilesList);
             System.out.println("X location= " + tilesList.get(0).getX()+ " Y location= "+tilesList.get(0).getY());});

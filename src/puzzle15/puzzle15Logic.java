@@ -25,17 +25,19 @@ public class puzzle15Logic {
             int tmp2 = rnd.nextInt(tiles.size());
 
             if ((tmp1 != tmp2) && (tiles.get(tmp1).getFill() != null && tiles.get(tmp2).getFill() != null)) {
-                Rectangle temp = new Rectangle();
-                temp.setX(tiles.get(tmp1).getX());
-                temp.setY(tiles.get(tmp1).getY());
-                tiles.get(tmp1).setX( tiles.get(tmp2).getX());
-                tiles.get(tmp1).setY( tiles.get(tmp2).getY());
-                tiles.get(tmp2).setX(temp.getX());
-                tiles.get(tmp2).setY(temp.getY());
-                // swap(tiles.get(tmp1), tiles.get(tmp2));
+                swapLocation(tiles.get(tmp1), tiles.get(tmp2));
             }
         }
 
+    }
+    public static void swapLocation(Rectangle tmp1,Rectangle tmp2){
+        Rectangle temp=new Rectangle();
+        temp.setX(tmp1.getX());
+        temp.setY(tmp1.getY());
+        tmp1.setX(tmp2.getX());
+        tmp1.setY(tmp2.getY());
+        tmp2.setX(tmp2.getX());
+        tmp2.setY(tmp2.getY());
     }
     public static void shuffleImage(List<Rectangle> tiles) {
 
@@ -81,7 +83,7 @@ public class puzzle15Logic {
 
     //metod som byter plats på vald bricka och tomma platsen.
     //inparameter: en plats i arrayen där en bricka finns placerad.
-    public List<String> changePlace(List<String> brickArray, int indexOfChoosenBrick) {
+    public List<String> changePlace (List<String> brickArray, int indexOfChoosenBrick){
         //1. Är det en godkänd bricka?
 
         //placering av 0
@@ -89,9 +91,8 @@ public class puzzle15Logic {
         for (int i = 0; i < brickArray.size(); i++)
             if (brickArray.get(i).equalsIgnoreCase("0"))
                 indexOfX = i;
-List<String>ar=new ArrayList<String>();
-return ar;
-    }
+return brickArray;
+}
 
 
 
