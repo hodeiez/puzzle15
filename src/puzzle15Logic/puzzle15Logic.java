@@ -37,38 +37,69 @@ public class puzzle15Logic {
         return randomBricks;
     }
 
+
+
     //metod som byter plats på vald bricka och tomma platsen.
     //inparameter: en plats i arrayen där en bricka finns placerad.
     public List<String> changePlace (List<String> brickArray, int indexOfChoosenBrick){
-        //1. Är det en godkänd bricka?
 
-        //placering av 0
-        int indexOfX;
+        //hitta index av X.
+        int indexOfX = 0;
         for (int i = 0; i < brickArray.size(); i++)
-            if (brickArray.get(i).equalsIgnoreCase("0"))
+            if (brickArray.get(i).equalsIgnoreCase("X"))
                 indexOfX = i;
+        System.out.println("index på X: " + indexOfX);
 
 
+        //om godkänd plats så byter den plats.
+        if (indexOfChoosenBrick == indexOfX - 1 || indexOfChoosenBrick == indexOfX + 1
+            || indexOfChoosenBrick == indexOfX - 4 || indexOfChoosenBrick == indexOfX + 4) {
+            brickArray.set(indexOfX, brickArray.get(indexOfChoosenBrick));
+            brickArray.set(indexOfChoosenBrick, "X");
+        }
 
+        //test
+        System.out.println("Array efter byte");
+        for (int i = 0; i < brickArray.size(); i++) {
+            System.out.print(brickArray.get(i) + " ");
+        }
+        System.out.println();
 
-
+        return brickArray;
 
     }
-
-
-
-
-
-
-
-
 
 
 
     public static void main(String[] args) {
 
         puzzle15Logic puzzle = new puzzle15Logic();
-        List<String> brickArray = puzzle.randomBricks();
+        List<String> randomBrickArray = puzzle.randomBricks();
+
+        List<String> testArray = new ArrayList<>();
+        testArray.add("1"); //index 0
+        testArray.add("X");
+        testArray.add("2");
+        testArray.add("3");
+        testArray.add("4");
+        testArray.add("5");
+        testArray.add("6"); //index 5
+        testArray.add("7");
+        testArray.add("8");
+        testArray.add("9");
+        testArray.add("10"); //index 10
+        testArray.add("11");
+        testArray.add("12");
+        testArray.add("13");
+        testArray.add("14");
+        testArray.add("15"); //index 15
+
+        System.out.println("Array före byte");
+        for (int i = 0; i < testArray.size(); i++)
+            System.out.print (testArray.get(i) + " ");
+        System.out.println();
+
+        puzzle.changePlace(testArray, 3);
 
 
 
