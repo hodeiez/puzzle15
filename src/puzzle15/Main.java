@@ -1,8 +1,5 @@
 package puzzle15;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -51,9 +48,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         //  Parent tiles = FXMLLoader.load(getClass().getResource("puzzleBoard.fxml"));
 
-        //Image image = new Image("urazpin.jpg",400,400,false,false);
-
-        Image image = new Image(String.valueOf(netImageJohan));
+        Image image = new Image(String.valueOf(netImageJohan),400,400,false,false);
         PixelReader px = image.getPixelReader();
 
 
@@ -86,9 +81,6 @@ public class Main extends Application {
         abutton.setOnAction(actionEvent -> {puzzle15Logic.shuffleLocation(tilesList);
             System.out.println("X location= " + tilesList.get(0).getX()+ " Y location= "+tilesList.get(0).getY());});
 
-        //Fix style to print it!!
-        //abutton.setStyle("-fx-background-color: #989642");//"-fx-arc-height: 10;-fx-arc-width: 10;");
-        //  abutton.setStyle("-fx-arc-height: 10;-fx-arc-width: 10");
         abutton.setStyle("-fx-border-color: #fa2241");
         abutton.setText("REPLAY");
 
@@ -106,33 +98,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(pn, 600, 600));
         primaryStage.show();
     }
-/*
-    //Johans metod
-    public void shuffle() {
 
-        Random rnd = new Random();
-
-        for (int i = 0; i < 10000; i++) {
-
-            int tmp1 = rnd.nextInt(tilesList.size());
-            int tmp2 = rnd.nextInt(tilesList.size());
-
-            if ((tmp1 != tmp2) && (tilesList.get(tmp1).getFill() != null && tilesList.get(tmp2).getFill() != null))
-                swap(tilesList.get(tmp1), tilesList.get(tmp2));
-
-        }
-
-    }
-
-    public void swap(Rectangle cellA, Rectangle cellB) {
-
-        Rectangle temp = new Rectangle();
-        temp.setFill(cellA.getFill());
-        cellA.setFill(cellB.getFill());
-        cellB.setFill(temp.getFill());
-
-    }
-*/
     public static void main(String[] args) {
         launch(args);
     }
