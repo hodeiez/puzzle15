@@ -22,11 +22,12 @@ public class puzzle15Logic {
         for(int x=0;x<tileSize*columns;x+=tileSize){
             for(int y=0;y<tileSize*rows;y+=tileSize){
 
-                    if ((tilesList.get(index).getX() == x && tilesList.get(index).getY() == y)) {
+                    if (tilesList.get(index).getX() == x && tilesList.get(index).getY() == y) {
                         if(tilesList.get(tilesList.size()-1).getFill()==null){
                         check = true;}
                     } else {
                         check = false;
+                        break;
                     }
                 System.out.println(index + " " +" x "+ x + " y " + y + " real-->" + " x " +tilesList.get(index).getX() + " y "+ tilesList.get(index).getY());
                 index++;
