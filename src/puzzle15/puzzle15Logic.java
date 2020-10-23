@@ -19,7 +19,7 @@ public class puzzle15Logic {
 
         Random rnd = new Random();
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < tiles.size()*4; i++) {
 
             int tmp1 = rnd.nextInt(tiles.size());
             int tmp2 = rnd.nextInt(tiles.size());
@@ -41,7 +41,7 @@ public class puzzle15Logic {
 
         Random rnd = new Random();
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < tiles.size()*4; i++) {
 
             int tmp1 = rnd.nextInt(tiles.size());
             int tmp2 = rnd.nextInt(tiles.size());

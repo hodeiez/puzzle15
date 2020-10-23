@@ -16,25 +16,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * Copyright: MIT
  */
 public class puzzle15Logic {
-    public static void shuffle(List<Rectangle> tiles) {
-
-        Random rnd = new Random();
-
-        for (int i = 0; i < 10000; i++) {
-
-            int tmp1 = rnd.nextInt(tiles.size());
-            int tmp2 = rnd.nextInt(tiles.size());
-
-            if ((tmp1 != tmp2) && (tiles.get(tmp1).getFill() != null && tiles.get(tmp2).getFill() != null)) {
-                Rectangle temp = new Rectangle();
-                temp.setFill(tiles.get(tmp1).getFill());
-                tiles.get(tmp1).setFill( tiles.get(tmp2).getFill());
-                tiles.get(tmp2).setFill(temp.getFill());
-               // swap(tiles.get(tmp1), tiles.get(tmp2));
-            }
-        }
-
-    }
 
     //metod som slumpar ut brickorna.
     public List<String> randomBricks() {
