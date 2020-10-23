@@ -69,6 +69,28 @@ public class puzzle15Logic {
 
     }
 
+    //metoden kollar om pusslet har lösts.
+    public boolean isVictory (List<String> brickArray){
+
+        String[] victoryLayout = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "X"};
+
+        boolean isVicotory = false;
+        int victoryCount = 0;
+
+        for (int i = 0; i < brickArray.size(); i++) {
+            if (brickArray.get(i) == victoryLayout[i])
+                victoryCount += 1;
+        }
+
+        if (victoryCount == 16)
+            return true;
+        else
+            return false;
+    }
+
+
+
+
 
 
     public static void main(String[] args) {
@@ -78,7 +100,6 @@ public class puzzle15Logic {
 
         List<String> testArray = new ArrayList<>();
         testArray.add("1"); //index 0
-        testArray.add("X");
         testArray.add("2");
         testArray.add("3");
         testArray.add("4");
@@ -92,8 +113,10 @@ public class puzzle15Logic {
         testArray.add("12");
         testArray.add("13");
         testArray.add("14");
-        testArray.add("15"); //index 15
+        testArray.add("15"); //index// 15
+        testArray.add("X");
 
+        //test
         System.out.println("Array före byte");
         for (int i = 0; i < testArray.size(); i++)
             System.out.print (testArray.get(i) + " ");
@@ -101,8 +124,12 @@ public class puzzle15Logic {
 
         puzzle.changePlace(testArray, 3);
 
-
-
+        //test
+        boolean isVictory = puzzle.isVictory(testArray);
+        if (isVictory)
+            System.out.println("Seger!");
+        else
+            System.out.println("Inte seger!");
 
 
 
