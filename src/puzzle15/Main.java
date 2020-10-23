@@ -25,8 +25,8 @@ import java.util.Random;
 
 public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
-    private int rows = 4;
-    private int columns = 4;
+    private int rows = 8;
+    private int columns = 8;
     Group tiles = new Group();
     URL netImageHodei;
 
@@ -79,8 +79,9 @@ public class Main extends Application {
         tiles.setOnMouseClicked(e -> {
             System.out.println("Y coordinate= " + e.getSceneX());
             System.out.println("X coordinate= " + e.getSceneY());
-           puzzle15Logic.showWhichTileIsHere(tilesList,e.getSceneX(),e.getSceneY());
-            puzzle15Logic.swapLocation(tilesList.get(15), tilesList.get(3));
+           puzzle15Logic.isEmptyTileClose(tilesList,puzzle15Logic.whichIndexIsHere(tilesList,e.getSceneX(),e.getSceneY()));
+           // puzzle15Logic.showWhichTileIsHere(tilesList,e.getSceneX(),e.getSceneY());
+           // puzzle15Logic.swapLocation(tilesList.get(15), tilesList.get(3));
         });
 
         mainPane.getChildren().add(tiles);

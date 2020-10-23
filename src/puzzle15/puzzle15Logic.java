@@ -14,17 +14,38 @@ import java.util.concurrent.ThreadLocalRandom;
  * Project: puzzle15
  * Copyright: MIT
  */
+//TODO: create coordinates system using constant references, so, later on is easier to manage
 public class puzzle15Logic {
+    public static void isEmptyTileClose(List<Rectangle> tilesList,int tileIndex){
+        if(tileIndex>=0) {
+//get tile-clicked
+            Rectangle clickedTile = tilesList.get(tileIndex);
+            //get empty tile
+            Rectangle emptyTile = tilesList.get(tilesList.size() - 1);
+            //is empty tile in tileclickedX-100 ||tilelickedY+100 || tileClikedY-100||tileClickedY+100
+            //then swap empty with clickedtile
 
-    public static void showWhichTileIsHere(List<Rectangle> tilesList,double x,double y){
+//TODO: fix this chaos, swaps diagonals or othe tiles far away
+            if (clickedTile.getX() - 100 == emptyTile.getX() ||
+                    clickedTile.getX() + 100 == emptyTile.getX() ||
+                    clickedTile.getY() - 100 == emptyTile.getY() ||
+                    clickedTile.getY() + 100 == emptyTile.getY()){
+                System.out.println("found");
+                swapLocation(clickedTile, emptyTile);}
+        }
+    }
+    public static int whichIndexIsHere(List<Rectangle> tilesList,double x,double y){
         //normalize values
         x-=(x%100)+100;
         y-=(y%100)+100;
         //check if a rectangle is there
         for(Rectangle r:tilesList){
-            if(r.getX()==x&&r.getY()==y)
+            if(r.getX()==x&&r.getY()==y){
+                System.out.println("Index n=" + tilesList.indexOf(r));
                 System.out.println("x value=" + r.getX()+ " y value=" + r.getY());
+            return tilesList.indexOf(r);}
         }
+        return-1;
     }
     public static void shuffleLocation(List<Rectangle> tiles) {
 
