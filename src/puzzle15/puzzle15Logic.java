@@ -1,5 +1,5 @@
 package puzzle15;
-
+//Johan skrev
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
