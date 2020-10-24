@@ -3,22 +3,26 @@ package puzzle15;
 
 import javafx.application.Application;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
 import javafx.scene.shape.Rectangle;
 
 import javafx.stage.Stage;
 
+import javax.swing.text.Style;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,14 +32,18 @@ public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
     private int rows = 4;
     private int columns = 4;
-    public final int tileSize = 100;
+    public final int tileSize = (((100/rows)*4+(100/columns)*4))/2;
     private boolean isSolved;
-    Label message = new Label("Not Solved");
+    Label message = new Label();
     Group tiles = new Group();
+
     Button restart = new Button("NEW GAME");
     Button solve = new Button("SOLVE");
-    //StackPane mainPane = new StackPane();
+    Spinner rowNumber=new Spinner();
+    Spinner columnNumber=new Spinner();
     VBox spinners =new VBox();
+    Pane gameName =new Pane();
+    Label puzzle15=new Label("PUZZLE15");
     FlowPane buttons=new FlowPane();
     BorderPane mainPane = new BorderPane();
     URL netImageHodei;
@@ -66,29 +74,45 @@ public class Main extends Application {
         createBoard();
 
 //setting in place
-
+        spinners.getChildren().addAll(rowNumber,columnNumber);
+        spinners.setAlignment(Pos.CENTER);
         buttons.getChildren().addAll(solve,restart);
-        buttons.setAlignment(Pos.CENTER);
-
-
+       buttons.setAlignment(Pos.CENTER);
+        message.setAlignment(Pos.CENTER);
+        gameName.getChildren().add(puzzle15);
 
 //Styling
-        restart.setStyle("-fx-faint-focus-color:transparent;-fx-focus-color: transparent;" +
-                "-fx-border-color: transparent;" +
-                "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
+        String styleShadow="-fx-border-color: transparent;" +
+                "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)";
+        String styleButtonFocus="-fx-faint-focus-color:transparent;-fx-focus-color: transparent;";
+
+        puzzle15.setRotate(-90);
+        puzzle15.setTranslateY(200);
+        puzzle15.setStyle("-fx-font-size: 40;-fx-font-weight: BOLD;-fx-padding: -50;-fx-text-fill: #4f2a2a;-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),2,0,0,0)");
+        rowNumber.setPrefSize(70,20);
+        columnNumber.setPrefSize(70,20);
+        rowNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;"+styleButtonFocus + styleShadow);
+        columnNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;" + styleButtonFocus + styleShadow);
+
+        buttons.setStyle("-fx-padding: 30,30");
+        message.setStyle("-fx-padding: 10,10;-fx-font-size: 40;-fx-font-weight: BOLD");
+
+        restart.setStyle( styleButtonFocus+ styleShadow);
+        solve.setStyle(styleButtonFocus +
+                styleShadow);
 
         mainPane.setStyle("-fx-background-color: #864c4c;-fx-effect: innershadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
-//add action to pane
+//add action
         tiles.setOnMouseClicked(e -> {
             System.out.println(" x " + e.getX() + " y " + e.getY());
             puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(), tileSize), tileSize);
             isSolved = puzzle15Logic.isSolved(tilesList, tileSize, columns, rows);
-            message.setText((isSolved) ? "CONGRATS!! YOU WON" : "NOT SOLVED");
+            message.setText((isSolved) ? "CONGRATS!! YOU WON" : null);
         });
-        //add action to button to shuffle
+
         restart.setOnAction(actionEvent -> {
-            createBoard(); //make a new clean board before shuffle, so, we mantain the empty tile in its place
+            createBoard();
             puzzle15Logic.shuffleLocation(tilesList);
         });
 
@@ -98,23 +122,13 @@ public class Main extends Application {
 //add stuff/
 
         BorderPane.setAlignment(message,Pos.CENTER);
-        BorderPane.setAlignment(buttons,Pos.CENTER);
+
         mainPane.setCenter(tiles);
         mainPane.setBottom(buttons);
         mainPane.setTop(message);
         mainPane.setRight(spinners);
-      /*
-        BorderPane.setAlignment(tiles, Pos.CENTER);
-        BorderPane.setAlignment(spinners,Pos.CENTER_RIGHT);
-        //VBox spinners->row amounts,columns amounts
-        BorderPane.setAlignment(buttons,Pos.BOTTOM_CENTER);
-        //FLowPanebuttons-> solve,restart,combobox select image, run image
-        BorderPane.setAlignment(message,Pos.TOP_CENTER);
-        mainPane.setCenter(tiles);
-        mainPane.setBottom(restart);
-        mainPane.setBottom(solve);
-        mainPane.setTop(message);
- */
+        mainPane.setLeft(gameName);
+
         primaryStage.setTitle("Puzzle 15");
 
 
