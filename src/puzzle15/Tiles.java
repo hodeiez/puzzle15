@@ -29,6 +29,62 @@ public class Tiles {
 
     Tiles(){}
 
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    public int getTileSize() {
+        return tileSize;
+    }
+
+    public void setTileSize(int tileSize) {
+        this.tileSize = tileSize;
+    }
+
+    public ArrayList<Rectangle> getTilesList() {
+        return tilesList;
+    }
+
+    public void setTilesList(ArrayList<Rectangle> tilesList) {
+        this.tilesList = tilesList;
+    }
+
+    public Image getBaseImage() {
+        return baseImage;
+    }
+
+    public void setBaseImage(Image baseImage) {
+        this.baseImage = baseImage;
+    }
+
+    public URL getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(URL imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public Group getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(Group tiles) {
+        this.tiles = tiles;
+    }
+
     public void createBoard() {
         Image image = new Image(String.valueOf(imageURL), columns * tileSize, rows * tileSize, false, false);
         PixelReader px = image.getPixelReader();
