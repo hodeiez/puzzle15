@@ -2,6 +2,7 @@ package puzzle15;
 
 
 import javafx.application.Application;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -25,16 +26,16 @@ import java.util.ArrayList;
 
 public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
-    public final int tileSize=50;
-    private int rows = 8;
-    private int columns = 8;
+    public final int tileSize=100;
+    private int rows = 4;
+    private int columns = 4;
     private boolean isSolved;
     Label message=new Label("Not Solved");
     Group tiles = new Group();
     Button restart = new Button("NEW GAME");
     Button solve=new Button("SOLVE");
     StackPane mainPane = new StackPane();
-    //BorderPane mainPane = new BorderPane();
+   // BorderPane mainPane = new BorderPane();
     URL netImageHodei;
 
     {
@@ -62,7 +63,7 @@ public class Main extends Application {
 //create the board and add to Group
         createBoard();
 
-//setting in pplace
+//setting in place
 
 
 
@@ -87,7 +88,6 @@ public class Main extends Application {
             System.out.println(" x " + e.getX() + " y " +e.getY());
             puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(),tileSize),tileSize);
             isSolved=puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
-            System.out.println(puzzle15Logic.isSolved(tilesList,tileSize,columns,rows));
             message.setText((isSolved)?"CONGRATS!! YOU WON":"NOT SOLVED");
         });
         //add action to button to shuffle
@@ -105,10 +105,10 @@ public class Main extends Application {
         mainPane.getChildren().add(solve);
         mainPane.getChildren().add(message);
 
-        /*
+      /*
         BorderPane.setAlignment(tiles, Pos.CENTER);
-        BorderPane.setAlignment(restart,Pos.BOTTOM_RIGHT);
-        BorderPane.setAlignment(solve,Pos.BOTTOM_CENTER);
+        BorderPane.setAlignment(sliders,Pos.CENTER_RIGHT);
+        BorderPane.setAlignment(buttons,Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(message,Pos.TOP_CENTER);
         mainPane.setCenter(tiles);
         mainPane.setBottom(restart);

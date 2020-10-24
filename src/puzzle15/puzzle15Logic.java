@@ -32,7 +32,6 @@ public class puzzle15Logic {
                 index++;
             }
 
-
             }
 
         return check;
