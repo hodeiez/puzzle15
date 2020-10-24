@@ -26,9 +26,9 @@ import java.util.ArrayList;
 
 public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
-    public final int tileSize=100;
     private int rows = 4;
     private int columns = 4;
+    public final int tileSize=100;
     private boolean isSolved;
     Label message=new Label("Not Solved");
     Group tiles = new Group();
@@ -108,7 +108,9 @@ public class Main extends Application {
       /*
         BorderPane.setAlignment(tiles, Pos.CENTER);
         BorderPane.setAlignment(sliders,Pos.CENTER_RIGHT);
+        //sliders->row amounts,columns amounts
         BorderPane.setAlignment(buttons,Pos.BOTTOM_CENTER);
+        //buttons-> solve,restart,combobox select image, run image
         BorderPane.setAlignment(message,Pos.TOP_CENTER);
         mainPane.setCenter(tiles);
         mainPane.setBottom(restart);
