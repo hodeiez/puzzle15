@@ -25,9 +25,9 @@ import java.util.ArrayList;
 
 public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
-    public final int tileSize=100;
-    private int rows = 4;
-    private int columns = 4;
+    public final int tileSize=50;
+    private int rows = 8;
+    private int columns = 8;
     private boolean isSolved;
     Label message=new Label("Not Solved");
     Group tiles = new Group();
@@ -75,8 +75,6 @@ public class Main extends Application {
 
 
 
-
-
 //Styling
        restart.setStyle("-fx-faint-focus-color:transparent;-fx-focus-color: transparent;" +
                 "-fx-border-color: transparent;" +
@@ -86,8 +84,8 @@ public class Main extends Application {
 
 //add action to pane
         tiles.setOnMouseClicked(e -> {
-            System.out.println(" x " + e.getSceneX() + " y " +e.getSceneY());
-            puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getSceneX(), e.getSceneY(),tileSize),tileSize);
+            System.out.println(" x " + e.getX() + " y " +e.getY());
+            puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(),tileSize),tileSize);
             isSolved=puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
             System.out.println(puzzle15Logic.isSolved(tilesList,tileSize,columns,rows));
             message.setText((isSolved)?"CONGRATS!! YOU WON":"NOT SOLVED");
