@@ -1,84 +1,155 @@
 package puzzle15;
 
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
+
 import javafx.scene.shape.Rectangle;
+
 import javafx.stage.Stage;
 
-
-import java.io.File;
-import java.lang.reflect.Array;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Main extends Application {
-List<Rectangle> tilesList=new ArrayList<Rectangle>();
-  // List<ImageView>tilesCell=new ArrayList<>();
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-     //  Parent tiles = FXMLLoader.load(getClass().getResource("puzzleBoard.fxml"));
+    ArrayList<Rectangle> tilesList = new ArrayList<>();
+    public final int tileSize=50;
+    private int rows = 8;
+    private int columns = 8;
+    private boolean isSolved;
+    Label message=new Label("Not Solved");
+    Group tiles = new Group();
+    Button restart = new Button("NEW GAME");
+    Button solve=new Button("SOLVE");
+    StackPane mainPane = new StackPane();
+    //BorderPane mainPane = new BorderPane();
+    URL netImageHodei;
 
-       Pane tiles= new Pane();
-       //Group tiles =new Group();
-
-        for(int i=0;i<=3;i++){
-            for(int j=0;j<=3;j++){
-               Rectangle rect=new Rectangle(100*i,100*j,100,100);
-                Image image = new Image("urazpin.jpg");
-
-               // ImagePattern imagePattern = new ImagePattern(image);
-                PixelReader px=image.getPixelReader();
-
-                WritableImage newImage = new WritableImage(px,100*i,100*j,100,100);
-
-                Image cropped=newImage;
-                ImagePattern imagePattern2 = new ImagePattern(cropped);
-                rect.setFill(imagePattern2);
-
-
-                //rect.setFill(Color.BEIGE);
-                rect.setArcHeight(10);
-                rect.setArcWidth(10);
-                tilesList.add(rect);
-               tiles.getChildren().add(rect);
-            }
-
+    {
+        try {
+            netImageHodei = new URL("https://media-exp1.licdn.com/dms/image/C4E03AQE88gdGS7iRcg/profile-displayphoto-shrink_400_400/0?e=1608768000&v=beta&t=vyTqYxYzmAYDrzkgQ5YBL6XyJejLI-vto7TK1SsEKz8");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
+    }
 
-        Button abutton=new Button();
-        abutton.setTranslateY(250);
-        abutton.setTranslateX(0);
-        abutton.setText("REPLAY");
-        StackPane pn=new StackPane();
-        pn.getChildren().add(tiles);
-        pn.getChildren().add(abutton);
+    URL netImageJohan;
 
-        //Parent root = FXMLLoader.load(getClass().getResource("puzzleBoard.fxml"));
+    {
+        try {
+            netImageJohan = new URL("https://media-exp1.licdn.com/dms/image/C4E03AQFLn250WvzsqA/profile-displayphoto-shrink_400_400/0?e=1608768000&v=beta&t=C4nmzM628lxwWtCDGu-ifMaZoaKnsNLSY9kF8pW2B-g");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+
+
+//create the board and add to Group
+        createBoard();
+
+//setting in pplace
+
+
+
+ restart.setTranslateY(250);
+        restart.setTranslateX(0);
+        solve.setTranslateY(280);
+        solve.setTranslateX(0);
+        message.setTranslateY(-250);
+        message.setTranslateX(0);
+
+
+
+//Styling
+       restart.setStyle("-fx-faint-focus-color:transparent;-fx-focus-color: transparent;" +
+                "-fx-border-color: transparent;" +
+               "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
+
+        mainPane.setStyle("-fx-background-color: #864c4c");
+
+//add action to pane
+        tiles.setOnMouseClicked(e -> {
+            System.out.println(" x " + e.getX() + " y " +e.getY());
+            puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(),tileSize),tileSize);
+            isSolved=puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
+            System.out.println(puzzle15Logic.isSolved(tilesList,tileSize,columns,rows));
+            message.setText((isSolved)?"CONGRATS!! YOU WON":"NOT SOLVED");
+        });
+        //add action to button to shuffle
+        restart.setOnAction(actionEvent -> {
+            createBoard(); //make a new clean board before shuffle, so, we mantain the empty tile in its place
+            puzzle15Logic.shuffleLocation(tilesList);
+        });
+
+        solve.setOnAction(event->{
+            createBoard();
+        });
+//add stuff
+      mainPane.getChildren().add(tiles);
+        mainPane.getChildren().add(restart);
+        mainPane.getChildren().add(solve);
+        mainPane.getChildren().add(message);
+
+        /*
+        BorderPane.setAlignment(tiles, Pos.CENTER);
+        BorderPane.setAlignment(restart,Pos.BOTTOM_RIGHT);
+        BorderPane.setAlignment(solve,Pos.BOTTOM_CENTER);
+        BorderPane.setAlignment(message,Pos.TOP_CENTER);
+        mainPane.setCenter(tiles);
+        mainPane.setBottom(restart);
+        mainPane.setBottom(solve);
+        mainPane.setTop(message);
+ */
         primaryStage.setTitle("Puzzle 15");
 
 
-
-        primaryStage.setScene(new Scene(pn, 600, 600,Color.DARKBLUE));
+        primaryStage.setScene(new Scene(mainPane,600, 600));
         primaryStage.show();
     }
-       // TextField test=new TextField("FDAKFDAMFLKA");
 
+    public void createBoard() {
+        Image image = new Image(String.valueOf(netImageHodei), columns * tileSize, rows * tileSize, false, false);
+        PixelReader px = image.getPixelReader();
+
+        if (tiles.getChildren().containsAll(tilesList)) {
+            tiles.getChildren().removeAll(tilesList);
+        }
+        if (tilesList.size() > 0)
+            tilesList.clear();
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+                Rectangle rect = new Rectangle(tileSize * i, tileSize * j, tileSize, tileSize);
+                rect.setFill(new ImagePattern(new WritableImage(px, tileSize * i, tileSize * j, tileSize, tileSize)));
+
+                if (i == columns - 1 && j == rows - 1)
+                    rect.setFill(null);
+
+                rect.setArcHeight(10);
+                rect.setArcWidth(10);
+
+
+                rect.setStyle("-fx-effect: dropshadow(three-pass-box,rgb(45,40,40),10,0,0,0)");
+                tilesList.add(rect);
+            }
+        }
+
+        tiles.getChildren().addAll(tilesList);
+    }
 
     public static void main(String[] args) {
         launch(args);
