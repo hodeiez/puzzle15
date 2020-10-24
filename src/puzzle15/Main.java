@@ -28,14 +28,16 @@ public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
     private int rows = 4;
     private int columns = 4;
-    public final int tileSize=100;
+    public final int tileSize = 100;
     private boolean isSolved;
-    Label message=new Label("Not Solved");
+    Label message = new Label("Not Solved");
     Group tiles = new Group();
     Button restart = new Button("NEW GAME");
-    Button solve=new Button("SOLVE");
-    StackPane mainPane = new StackPane();
-   // BorderPane mainPane = new BorderPane();
+    Button solve = new Button("SOLVE");
+    //StackPane mainPane = new StackPane();
+    VBox spinners =new VBox();
+    FlowPane buttons=new FlowPane();
+    BorderPane mainPane = new BorderPane();
     URL netImageHodei;
 
     {
@@ -65,30 +67,24 @@ public class Main extends Application {
 
 //setting in place
 
-
-
- restart.setTranslateY(250);
-        restart.setTranslateX(0);
-        solve.setTranslateY(280);
-        solve.setTranslateX(0);
-        message.setTranslateY(-250);
-        message.setTranslateX(0);
+        buttons.getChildren().addAll(solve,restart);
+        buttons.setAlignment(Pos.CENTER);
 
 
 
 //Styling
-       restart.setStyle("-fx-faint-focus-color:transparent;-fx-focus-color: transparent;" +
+        restart.setStyle("-fx-faint-focus-color:transparent;-fx-focus-color: transparent;" +
                 "-fx-border-color: transparent;" +
-               "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
+                "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
         mainPane.setStyle("-fx-background-color: #864c4c;-fx-effect: innershadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
 //add action to pane
         tiles.setOnMouseClicked(e -> {
-            System.out.println(" x " + e.getX() + " y " +e.getY());
-            puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(),tileSize),tileSize);
-            isSolved=puzzle15Logic.isSolved(tilesList,tileSize,columns,rows);
-            message.setText((isSolved)?"CONGRATS!! YOU WON":"NOT SOLVED");
+            System.out.println(" x " + e.getX() + " y " + e.getY());
+            puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(), tileSize), tileSize);
+            isSolved = puzzle15Logic.isSolved(tilesList, tileSize, columns, rows);
+            message.setText((isSolved) ? "CONGRATS!! YOU WON" : "NOT SOLVED");
         });
         //add action to button to shuffle
         restart.setOnAction(actionEvent -> {
@@ -96,21 +92,23 @@ public class Main extends Application {
             puzzle15Logic.shuffleLocation(tilesList);
         });
 
-        solve.setOnAction(event->{
+        solve.setOnAction(event -> {
             createBoard();
         });
-//add stuff
-      mainPane.getChildren().add(tiles);
-        mainPane.getChildren().add(restart);
-        mainPane.getChildren().add(solve);
-        mainPane.getChildren().add(message);
+//add stuff/
 
+        BorderPane.setAlignment(message,Pos.CENTER);
+        BorderPane.setAlignment(buttons,Pos.CENTER);
+        mainPane.setCenter(tiles);
+        mainPane.setBottom(buttons);
+        mainPane.setTop(message);
+        mainPane.setRight(spinners);
       /*
         BorderPane.setAlignment(tiles, Pos.CENTER);
-        BorderPane.setAlignment(sliders,Pos.CENTER_RIGHT);
-        //sliders->row amounts,columns amounts
+        BorderPane.setAlignment(spinners,Pos.CENTER_RIGHT);
+        //VBox spinners->row amounts,columns amounts
         BorderPane.setAlignment(buttons,Pos.BOTTOM_CENTER);
-        //buttons-> solve,restart,combobox select image, run image
+        //FLowPanebuttons-> solve,restart,combobox select image, run image
         BorderPane.setAlignment(message,Pos.TOP_CENTER);
         mainPane.setCenter(tiles);
         mainPane.setBottom(restart);
@@ -120,7 +118,7 @@ public class Main extends Application {
         primaryStage.setTitle("Puzzle 15");
 
 
-        primaryStage.setScene(new Scene(mainPane,600, 600));
+        primaryStage.setScene(new Scene(mainPane, 600, 600));
         primaryStage.show();
     }
 
