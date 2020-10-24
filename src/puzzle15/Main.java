@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 
 import javafx.scene.image.PixelReader;
@@ -41,6 +42,8 @@ public class Main extends Application {
     Button solve = new Button("SOLVE");
     Spinner rowNumber=new Spinner();
     Spinner columnNumber=new Spinner();
+    SpinnerValueFactory<Integer> rowAmount= new SpinnerValueFactory.IntegerSpinnerValueFactory(2,32,4);
+    SpinnerValueFactory<Integer> colAmount= new SpinnerValueFactory.IntegerSpinnerValueFactory(2,32,4);
     VBox spinners =new VBox();
     Pane gameName =new Pane();
     Label puzzle15=new Label("PUZZLE15");
@@ -72,7 +75,9 @@ public class Main extends Application {
 
 //create the board and add to Group
         createBoard();
-
+//setting values in components
+        rowNumber.setValueFactory(rowAmount);
+        columnNumber.setValueFactory(colAmount);
 //setting in place
         spinners.getChildren().addAll(rowNumber,columnNumber);
         spinners.setAlignment(Pos.CENTER);
@@ -89,8 +94,8 @@ public class Main extends Application {
         puzzle15.setRotate(-90);
         puzzle15.setTranslateY(200);
         puzzle15.setStyle("-fx-font-size: 40;-fx-font-weight: BOLD;-fx-padding: -50;-fx-text-fill: #4f2a2a;-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),2,0,0,0)");
-        rowNumber.setPrefSize(70,20);
-        columnNumber.setPrefSize(70,20);
+        rowNumber.setPrefSize(80,20);
+        columnNumber.setPrefSize(80,20);
         rowNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;"+styleButtonFocus + styleShadow);
         columnNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;" + styleButtonFocus + styleShadow);
 
@@ -112,11 +117,15 @@ public class Main extends Application {
         });
 
         restart.setOnAction(actionEvent -> {
+            rows=rowAmount.getValue();
+            columns=colAmount.getValue();
             createBoard();
             puzzle15Logic.shuffleLocation(tilesList);
         });
 
         solve.setOnAction(event -> {
+            rows=rowAmount.getValue();
+            columns=colAmount.getValue();
             createBoard();
         });
 //add stuff/
