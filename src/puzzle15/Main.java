@@ -3,7 +3,6 @@ package puzzle15;
 
 import javafx.application.Application;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,14 +14,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+
 import javafx.scene.paint.ImagePattern;
 
 import javafx.scene.shape.Rectangle;
 
 import javafx.stage.Stage;
 
-import javax.swing.text.Style;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,7 +31,9 @@ public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
     private int rows = 4;
     private int columns = 4;
-    public final int tileSize = (((100/rows)*4+(100/columns)*4))/2;
+    public final int tileSize = (((100/Math.max(rows,columns))*4+(100/Math.max(rows,columns))*4))/2;
+
+
     private boolean isSolved;
     Label message = new Label();
     Group tiles = new Group();
@@ -103,7 +104,7 @@ public class Main extends Application {
 
         mainPane.setStyle("-fx-background-color: #864c4c;-fx-effect: innershadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
-//add action
+//add actions
         tiles.setOnMouseClicked(e -> {
             System.out.println(" x " + e.getX() + " y " + e.getY());
             puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(), tileSize), tileSize);
@@ -119,7 +120,7 @@ public class Main extends Application {
         solve.setOnAction(event -> {
             createBoard();
         });
-//add stuff/
+//add stuff to mainPane/
 
         BorderPane.setAlignment(message,Pos.CENTER);
 
