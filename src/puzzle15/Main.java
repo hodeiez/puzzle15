@@ -81,7 +81,7 @@ public class Main extends Application {
                 "-fx-border-color: transparent;" +
                "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
-        mainPane.setStyle("-fx-background-color: #864c4c");
+        mainPane.setStyle("-fx-background-color: #864c4c;-fx-effect: innershadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
 //add action to pane
         tiles.setOnMouseClicked(e -> {
