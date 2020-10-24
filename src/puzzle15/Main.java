@@ -33,7 +33,7 @@ public class Main extends Application {
     ArrayList<Rectangle> tilesList = new ArrayList<>();
     private int rows = 4;
     private int columns = 4;
-    public final int tileSize = (((100/rows)*4+(100/columns)*4))/2;
+    public int tileSize = (((100/Math.max(rows,columns))*4+(100/Math.max(rows,columns))*4))/2;
     private boolean isSolved;
     Label message = new Label();
     Group tiles = new Group();
@@ -110,7 +110,6 @@ public class Main extends Application {
 
 //add action
         tiles.setOnMouseClicked(e -> {
-            System.out.println(" x " + e.getX() + " y " + e.getY());
             puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(), tileSize), tileSize);
             isSolved = puzzle15Logic.isSolved(tilesList, tileSize, columns, rows);
             message.setText((isSolved) ? "CONGRATS!! YOU WON" : null);
@@ -119,6 +118,7 @@ public class Main extends Application {
         restart.setOnAction(actionEvent -> {
             rows=rowAmount.getValue();
             columns=colAmount.getValue();
+            setTileSize();
             createBoard();
             puzzle15Logic.shuffleLocation(tilesList);
         });
@@ -126,6 +126,7 @@ public class Main extends Application {
         solve.setOnAction(event -> {
             rows=rowAmount.getValue();
             columns=colAmount.getValue();
+            setTileSize();
             createBoard();
         });
 //add stuff/
@@ -173,7 +174,9 @@ public class Main extends Application {
 
         tiles.getChildren().addAll(tilesList);
     }
-
+public void setTileSize(){
+    tileSize=(((100/Math.max(rows,columns))*4+(100/Math.max(rows,columns))*4))/2;
+}
     public static void main(String[] args) {
         launch(args);
     }
