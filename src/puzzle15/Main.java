@@ -10,15 +10,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 
-import javafx.scene.paint.ImagePattern;
 
-import javafx.scene.shape.Rectangle;
 
 import javafx.stage.Stage;
 
@@ -35,7 +30,6 @@ public class Main extends Application {
     private int columns = 4;
 
     private boolean isSolved;
-
 
     Label message = new Label();
     Group tiles = new Group();
@@ -81,16 +75,18 @@ public class Main extends Application {
         listOfImages.add(baseImage);
         listOfImages.add(countrySide);
 imageSelector.setItems(FXCollections.observableArrayList(listOfImages));
+
+
         Tiles tilesBoard = new Tiles();
         tilesBoard.setTiles(tiles);
 
 //create the board and add to Group
-        createBoard();
+        tilesBoard.createBoard(rows, columns, netImageHodei.toString());
 
 //setting values in components
         rowNumber.setValueFactory(rowAmount);
         columnNumber.setValueFactory(colAmount);
-        tilesBoard.createBoard(rows, columns, netImageHodei.toString());
+
 
 //setting in place
         spinners.getChildren().addAll(rowNumber,columnNumber);
@@ -125,7 +121,6 @@ imageSelector.setItems(FXCollections.observableArrayList(listOfImages));
 
 //add action
         tiles.setOnMouseClicked(e -> {
-            System.out.println(" x " + e.getX() + " y " + e.getY());
             tilesBoard.moveTiles(e);
             isSolved = tilesBoard.isSolved();
             message.setText((isSolved) ? "CONGRATS!! YOU WON" : null);
