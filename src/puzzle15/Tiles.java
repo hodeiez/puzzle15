@@ -9,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +24,6 @@ public class Tiles {
     private int tileSize;
     ArrayList<Rectangle> tilesList = new ArrayList<>();
     private Image baseImage;
-   // private URL imageURL;
     Group tiles =new Group();
 
     Tiles(){}

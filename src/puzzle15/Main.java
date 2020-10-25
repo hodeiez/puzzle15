@@ -97,9 +97,8 @@ public class Main extends Application {
         mainPane.setStyle("-fx-background-color: #864c4c;-fx-effect: innershadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
 
 //add action
-        imageSelector.valueProperty().addListener((observableValue, imagePath, t1) -> {
-            baseImage = t1.getPathString();
-        });
+        imageSelector.valueProperty().addListener((observableValue, imagePath, t1) ->
+            baseImage = t1.getPathString());
 
         tiles.setOnMouseClicked(e -> {
             tilesBoard.moveTiles(e);
