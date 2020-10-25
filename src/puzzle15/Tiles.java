@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -24,21 +25,13 @@ public class Tiles {
     private int tileSize;
     ArrayList<Rectangle> tilesList = new ArrayList<>();
     private Image baseImage;
-    private URL imageURL;
-    Group tiles;
+   // private URL imageURL;
+    Group tiles =new Group();
 
     Tiles(){}
 
-    public int getRows() {
-        return rows;
-    }
-
     public void setRows(int rows) {
         this.rows = rows;
-    }
-
-    public int getColumns() {
-        return columns;
     }
 
     public void setColumns(int columns) {
@@ -49,8 +42,8 @@ public class Tiles {
         return tileSize;
     }
 
-    public void setTileSize(int tileSize) {
-        this.tileSize = tileSize;
+    public void setTileSize() {
+        this.tileSize = (((100/Math.max(rows,columns))*4+(100/Math.max(rows,columns))*4))/2;
     }
 
     public ArrayList<Rectangle> getTilesList() {
@@ -69,14 +62,6 @@ public class Tiles {
         this.baseImage = baseImage;
     }
 
-    public URL getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(URL imageURL) {
-        this.imageURL = imageURL;
-    }
-
     public Group getTiles() {
         return tiles;
     }
@@ -85,8 +70,23 @@ public class Tiles {
         this.tiles = tiles;
     }
 
-    public void createBoard() {
-        Image image = new Image(String.valueOf(imageURL), columns * tileSize, rows * tileSize, false, false);
+    public void moveTiles(MouseEvent e){
+        puzzle15Logic.isEmptyTileNear(tilesList, puzzle15Logic.whichIndexIsHere(tilesList, e.getX(), e.getY(), tileSize), tileSize);
+
+    }
+    public boolean isSolved(){
+       return puzzle15Logic.isSolved(tilesList, tileSize, columns, rows);
+
+    }
+    public void shuffle(){
+        puzzle15Logic.shuffleLocation(tilesList);
+    }
+    public void createBoard(int rows,int columns,String baseImage) {
+        setRows(rows);
+        setColumns(columns);
+        setTileSize();
+
+        Image image = new Image(String.valueOf(baseImage), columns * tileSize, rows * tileSize, false, false);
         PixelReader px = image.getPixelReader();
 
         if (tiles.getChildren().containsAll(tilesList)) {
