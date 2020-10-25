@@ -4,21 +4,29 @@ package puzzle15;
 import javafx.application.Application;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 
+import javafx.scene.paint.ImagePattern;
+
+import javafx.scene.shape.Rectangle;
 
 import javafx.stage.Stage;
 
-
+import javax.swing.text.Style;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main extends Application {
@@ -34,13 +42,19 @@ public class Main extends Application {
 
     Button restart = new Button("NEW GAME");
     Button solve = new Button("SOLVE");
-    Spinner rowNumber = new Spinner();
-    Spinner columnNumber = new Spinner();
-    VBox spinners = new VBox();
-    Pane gameName = new Pane();
-    Label puzzle15 = new Label("PUZZLE15");
-    FlowPane buttons = new FlowPane();
+    Spinner rowNumber=new Spinner();
+    Spinner columnNumber=new Spinner();
+    SpinnerValueFactory<Integer> rowAmount= new SpinnerValueFactory.IntegerSpinnerValueFactory(2,32,4);
+    SpinnerValueFactory<Integer> colAmount= new SpinnerValueFactory.IntegerSpinnerValueFactory(2,32,4);
+    ComboBox imageSelector =new ComboBox();
+    Label puzzle15=new Label("PUZZLE15+");
+    VBox spinners =new VBox();
+    Pane gameName =new Pane();
+    FlowPane buttons=new FlowPane();
     BorderPane mainPane = new BorderPane();
+    List<String> listOfImages=new ArrayList<>();
+    String baseImage="puzzle15draw.jpg";
+    String countrySide="countryside.jpg";
     URL netImageHodei;
 
     {
@@ -63,37 +77,47 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+//testing list
+        listOfImages.add(baseImage);
+        listOfImages.add(countrySide);
+imageSelector.setItems(FXCollections.observableArrayList(listOfImages));
         Tiles tilesBoard = new Tiles();
         tilesBoard.setTiles(tiles);
 
 //create the board and add to Group
+        createBoard();
+
+//setting values in components
+        rowNumber.setValueFactory(rowAmount);
+        columnNumber.setValueFactory(colAmount);
         tilesBoard.createBoard(rows, columns, netImageHodei.toString());
 
 //setting in place
-        spinners.getChildren().addAll(rowNumber, columnNumber);
+        spinners.getChildren().addAll(rowNumber,columnNumber);
         spinners.setAlignment(Pos.CENTER);
-        buttons.getChildren().addAll(solve, restart);
-        buttons.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(solve,restart, imageSelector);
+       buttons.setAlignment(Pos.CENTER);
         message.setAlignment(Pos.CENTER);
         gameName.getChildren().add(puzzle15);
 
 //Styling
-        String styleShadow = "-fx-border-color: transparent;" +
+        String styleShadow="-fx-border-color: transparent;" +
                 "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)";
-        String styleButtonFocus = "-fx-faint-focus-color:transparent;-fx-focus-color: transparent;";
+        String styleButtonFocus="-fx-faint-focus-color:transparent;-fx-focus-color: transparent;";
 
         puzzle15.setRotate(-90);
         puzzle15.setTranslateY(200);
-        puzzle15.setStyle("-fx-font-size: 40;-fx-font-weight: BOLD;-fx-padding: -50;-fx-text-fill: #4f2a2a;-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),2,0,0,0)");
-        rowNumber.setPrefSize(70, 20);
-        columnNumber.setPrefSize(70, 20);
-        rowNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;" + styleButtonFocus + styleShadow);
+        puzzle15.setStyle("-fx-font-size: 40;-fx-font-weight: BOLD;-fx-padding: -60;-fx-text-fill: #4f2a2a;-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),2,0,0,0)");
+        rowNumber.setPrefSize(80,20);
+        columnNumber.setPrefSize(80,20);
+        imageSelector.setStyle(styleButtonFocus);
+        rowNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;"+styleButtonFocus + styleShadow);
         columnNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;" + styleButtonFocus + styleShadow);
 
         buttons.setStyle("-fx-padding: 30,30");
         message.setStyle("-fx-padding: 10,10;-fx-font-size: 40;-fx-font-weight: BOLD");
 
-        restart.setStyle(styleButtonFocus + styleShadow);
+        restart.setStyle( styleButtonFocus+ styleShadow);
         solve.setStyle(styleButtonFocus +
                 styleShadow);
 
@@ -117,9 +141,9 @@ public class Main extends Application {
         });
 //add stuff/
 
-        BorderPane.setAlignment(message, Pos.CENTER);
+        BorderPane.setAlignment(message,Pos.CENTER);
 
-        mainPane.setCenter(tilesBoard.getTiles());
+        mainPane.setCenter(tiles);
         mainPane.setBottom(buttons);
         mainPane.setTop(message);
         mainPane.setRight(spinners);
