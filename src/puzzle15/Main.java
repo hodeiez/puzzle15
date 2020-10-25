@@ -49,6 +49,9 @@ public class Main extends Application {
     Label puzzle15=new Label("PUZZLE15");
     FlowPane buttons=new FlowPane();
     BorderPane mainPane = new BorderPane();
+
+    String baseImage="puzzle15draw.jpg";
+    String countrySide="countryside.jpg";
     URL netImageHodei;
 
     {
@@ -147,7 +150,8 @@ public class Main extends Application {
     }
 
     public void createBoard() {
-        Image image = new Image(String.valueOf(netImageHodei), columns * tileSize, rows * tileSize, false, false);
+       Image image = new Image(String.valueOf(countrySide), columns * tileSize, rows * tileSize, false, false);
+
         PixelReader px = image.getPixelReader();
 
         if (tiles.getChildren().containsAll(tilesList)) {
