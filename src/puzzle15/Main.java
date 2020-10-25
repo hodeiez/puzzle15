@@ -150,7 +150,7 @@ public class Main extends Application {
     }
 
     public void createBoard() {
-       Image image = new Image(String.valueOf(countrySide), columns * tileSize, rows * tileSize, false, false);
+       Image image = new Image(String.valueOf(baseImage), columns * tileSize, rows * tileSize, false, false);
 
         PixelReader px = image.getPixelReader();
 
