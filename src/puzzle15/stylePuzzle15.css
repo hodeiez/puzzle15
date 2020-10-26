@@ -1,0 +1,36 @@
+.button{
+    -fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0);
+    -fx-faint-focus-color:transparent;
+    -fx-focus-color: transparent;
+}
+.combo-box{
+    -fx-focus-color:transparent;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0);
+
+}
+.spinner{
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0);
+    -fx-padding: 10,10;-fx-background-color: transparent;
+    -fx-faint-focus-color:transparent;
+    -fx-focus-color: transparent;
+}
+.redpane {
+    -fx-background-color: #864c4c;
+    -fx-effect: innershadow(three-pass-box,rgb(0,0,0),10,0,0,0);
+}
+.label{
+    -fx-padding: 10,10;-fx-font-size: 40;-fx-font-weight: BOLD;
+
+}
+#gameTitle {
+    -fx-font-size: 40;
+    -fx-font-weight: BOLD;
+    -fx-padding: -60;-fx-text-fill: #4f2a2a;
+    -fx-effect: dropshadow(three-pass-box,rgb(0,0,0),2,0,0,0);
+}
+#buttonsPane {
+    -fx-padding: 30,30;
+}
+
