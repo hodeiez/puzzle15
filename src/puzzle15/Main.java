@@ -40,7 +40,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
 
-//Setting imageslist in combobox
+//Setting imagelist in combobox
         ImageData imageData = new ImageData();
         ObservableList<ImagePath> imageList = FXCollections.observableArrayList(imageData.getImageList());
         imageSelector.itemsProperty().setValue(imageList);
