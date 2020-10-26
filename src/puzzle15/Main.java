@@ -74,28 +74,14 @@ public class Main extends Application {
         gameName.getChildren().add(puzzle15);
 
 //Styling
-        String styleShadow = "-fx-border-color: transparent;" +
-                "-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),10,0,0,0)";
-        String styleButtonFocus = "-fx-faint-focus-color:transparent;-fx-focus-color: transparent;";
 
         puzzle15.setRotate(-90);
         puzzle15.setTranslateY(200);
-        puzzle15.setStyle("-fx-font-size: 40;-fx-font-weight: BOLD;-fx-padding: -60;-fx-text-fill: #4f2a2a;-fx-effect: dropshadow(three-pass-box,rgb(0,0,0),2,0,0,0)");
         rowNumber.setPrefSize(80, 20);
         columnNumber.setPrefSize(80, 20);
-        imageSelector.setStyle(styleButtonFocus);
-        rowNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;" + styleButtonFocus + styleShadow);
-        columnNumber.setStyle("-fx-padding: 10,10;-fx-background-color: transparent;" + styleButtonFocus + styleShadow);
-
-        buttons.setStyle("-fx-padding: 30,30");
-        message.setStyle("-fx-padding: 10,10;-fx-font-size: 40;-fx-font-weight: BOLD");
-
-        restart.setStyle(styleButtonFocus + styleShadow);
-        solve.setStyle(styleButtonFocus +
-                styleShadow);
-
-        mainPane.setStyle("-fx-background-color: #864c4c;-fx-effect: innershadow(three-pass-box,rgb(0,0,0),10,0,0,0)");
-
+        puzzle15.setId("gameTitle");
+        buttons.setId("buttonsBox");
+        mainPane.getStyleClass().add("redpane");
 //add action
         imageSelector.valueProperty().addListener((observableValue, imagePath, t1) ->
             baseImage = t1.getPathString());
@@ -116,7 +102,7 @@ public class Main extends Application {
             rowColumnsUpdate();
             tilesBoard.createBoard(rows, columns, baseImage);
         });
-//add stuff/
+//add stuff to main pane
 
         BorderPane.setAlignment(message, Pos.CENTER);
 
@@ -130,6 +116,8 @@ public class Main extends Application {
 
 
         primaryStage.setScene(new Scene(mainPane, 600, 600));
+        String stylesheet = getClass().getResource("stylePuzzle15.css").toExternalForm();
+        primaryStage.getScene().getStylesheets().add(stylesheet);
         primaryStage.show();
     }
 
