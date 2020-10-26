@@ -2,18 +2,13 @@ package puzzle15;
 
 
 import javafx.application.Application;
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
 import javafx.scene.layout.*;
-
-
 import javafx.stage.Stage;
 
 
@@ -22,11 +17,9 @@ public class Main extends Application {
     private int rows = 4;
     private int columns = 4;
 
-    private boolean isSolved;
 
     Label message = new Label();
     Group tiles = new Group();
-
     Button restart = new Button("NEW GAME");
     Button solve = new Button("SOLVE");
     Spinner rowNumber = new Spinner();
@@ -80,27 +73,30 @@ public class Main extends Application {
         rowNumber.setPrefSize(80, 20);
         columnNumber.setPrefSize(80, 20);
         puzzle15.setId("gameTitle");
-        buttons.setId("buttonsBox");
+        buttons.setId("buttonsPane");
         mainPane.getStyleClass().add("redpane");
+
 //add action
         imageSelector.valueProperty().addListener((observableValue, imagePath, t1) ->
-            baseImage = t1.getPathString());
+                baseImage = t1.getPathString());
 
         tiles.setOnMouseClicked(e -> {
             tilesBoard.moveTiles(e);
-            isSolved = tilesBoard.isSolved();
-            message.setText((isSolved) ? "CONGRATS!! YOU WON" : null);
+            isSolved(tilesBoard);
+
         });
 
         restart.setOnAction(actionEvent -> {
             rowColumnsUpdate();
             tilesBoard.createBoard(rows, columns, baseImage);
             tilesBoard.shuffle();
+            isSolved(tilesBoard);
         });
 
         solve.setOnAction(event -> {
             rowColumnsUpdate();
             tilesBoard.createBoard(rows, columns, baseImage);
+            isSolved(tilesBoard);
         });
 //add stuff to main pane
 
@@ -125,7 +121,10 @@ public class Main extends Application {
         rows = rowAmount.getValue();
         columns = colAmount.getValue();
     }
-
+    public void isSolved(Tiles tilesBoard){
+        boolean isSolved=tilesBoard.isSolved();
+        message.setText((isSolved) ? "CONGRATS!! YOU WON" : null);
+    }
     public static void main(String[] args) {
         launch(args);
     }
