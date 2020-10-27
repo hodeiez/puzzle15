@@ -19,6 +19,7 @@ public class Main extends Application {
 
 
     Label message = new Label();
+
     Group tiles = new Group();
     Button restart = new Button("NEW GAME");
     Button solve = new Button("SOLVE");
@@ -70,11 +71,13 @@ public class Main extends Application {
 
         puzzle15.setRotate(-90);
         puzzle15.setTranslateY(200);
+
         rowNumber.setPrefSize(80, 20);
         columnNumber.setPrefSize(80, 20);
         puzzle15.setId("gameTitle");
         buttons.setId("buttonsPane");
         mainPane.getStyleClass().add("redpane");
+
 
 //add action
         imageSelector.valueProperty().addListener((observableValue, imagePath, t1) ->
@@ -87,24 +90,33 @@ public class Main extends Application {
         });
 
         restart.setOnAction(actionEvent -> {
+
             rowColumnsUpdate();
             tilesBoard.createBoard(rows, columns, baseImage);
             tilesBoard.shuffle();
             isSolved(tilesBoard);
+
+
+
+
+
         });
 
         solve.setOnAction(event -> {
             rowColumnsUpdate();
             tilesBoard.createBoard(rows, columns, baseImage);
             isSolved(tilesBoard);
+
         });
 //add stuff to main pane
 
         BorderPane.setAlignment(message, Pos.CENTER);
 
+
         mainPane.setCenter(tiles);
         mainPane.setBottom(buttons);
         mainPane.setTop(message);
+
         mainPane.setRight(spinners);
         mainPane.setLeft(gameName);
 
@@ -122,8 +134,11 @@ public class Main extends Application {
         columns = colAmount.getValue();
     }
     public void isSolved(Tiles tilesBoard){
+
         boolean isSolved=tilesBoard.isSolved();
+
         message.setText((isSolved) ? "CONGRATS!! YOU WON" : null);
+        
     }
     public static void main(String[] args) {
         launch(args);
