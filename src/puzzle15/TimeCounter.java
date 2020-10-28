@@ -16,7 +16,7 @@ import java.util.TimerTask;
 public class TimeCounter {
 private Timer timer;
 private TimerTask task;
-private int TimeStart=0;
+private int timeStart =0;
 private String showTime;
 
 
@@ -30,18 +30,19 @@ private String showTime;
 
         @Override
         public void run() {
-            TimeStart++;
+            timeStart++;
 
             Platform.runLater(
                     new Runnable() {
                         public void run() {
-                          timerLabel.setText(String.format("H:%d M:%d S:%d",TimeStart/3600, (TimeStart/60)%60,TimeStart%60));
+                          timerLabel.setText(String.format("H:%d M:%d S:%d", timeStart /3600, (timeStart /60)%60, timeStart %60));
                         }
                     }
             );
         }
     },0, 1000);
           if(stop){
+              timeStart =0;
               timer.cancel();
               timer.purge();}
         //timer.scheduleAtFixedRate(task,0,1000);

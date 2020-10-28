@@ -16,10 +16,10 @@ public class Main extends Application {
 
     private int rows = 4;
     private int columns = 4;
-
+TimeCounter tm=new TimeCounter();
 
     Label message = new Label();
-
+    Label timer=new Label();
     Group tiles = new Group();
     Button restart = new Button("NEW GAME");
     Button solve = new Button("SOLVE");
@@ -65,6 +65,7 @@ public class Main extends Application {
         buttons.getChildren().addAll(solve, restart, imageSelector);
         buttons.setAlignment(Pos.CENTER);
         message.setAlignment(Pos.CENTER);
+        timer.setAlignment(Pos.CENTER);
         gameName.getChildren().add(puzzle15);
 
 //Styling
@@ -100,6 +101,7 @@ public class Main extends Application {
 
 
 
+
         });
 
         solve.setOnAction(event -> {
@@ -107,15 +109,18 @@ public class Main extends Application {
             tilesBoard.createBoard(rows, columns, baseImage);
             isSolved(tilesBoard);
 
+
         });
 //add stuff to main pane
 
         BorderPane.setAlignment(message, Pos.CENTER);
-
+        BorderPane.setAlignment(timer, Pos.CENTER);
 
         mainPane.setCenter(tiles);
         mainPane.setBottom(buttons);
         mainPane.setTop(message);
+
+        mainPane.setTop(timer);
 
         mainPane.setRight(spinners);
         mainPane.setLeft(gameName);
