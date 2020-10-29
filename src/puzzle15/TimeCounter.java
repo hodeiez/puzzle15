@@ -14,37 +14,41 @@ import java.util.TimerTask;
  * Copyright: MIT
  */
 public class TimeCounter {
-private Timer timer;
-private TimerTask task;
-private int timeStart =0;
-private String showTime;
+    private Timer timer;
+    private TimerTask task;
+    private int timeStart = 0;
+    private String showTime;
 
 
     public String getShowTime() {
         return showTime;
     }
 
-    public void runTimer(Label timerLabel,boolean stop){
-    timer = new Timer();
-          timer.scheduleAtFixedRate(new TimerTask(){
+    public void runTimer(Label timerLabel, boolean stop) {
+        if(timeStart==0){
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
 
-        @Override
-        public void run() {
-            timeStart++;
+            @Override
+            public void run() {
 
-            Platform.runLater(
-                    new Runnable() {
-                        public void run() {
-                          timerLabel.setText(String.format("H:%d M:%d S:%d", timeStart /3600, (timeStart /60)%60, timeStart %60));
+                Platform.runLater(
+                        new Runnable() {
+                            public void run() {
+                                timerLabel.setText(String.format("H:%d M:%d S:%d", timeStart / 3600, (timeStart / 60) % 60, timeStart % 60));
+                            }
                         }
-                    }
-            );
+                );
+                timeStart++;
+
+            }
+        }, 0, 1000);}
+        else if (stop) {
+
+            timer.cancel();
+            timer.purge();
+            timeStart = 0;
         }
-    },0, 1000);
-          if(stop){
-              timeStart =0;
-              timer.cancel();
-              timer.purge();}
         //timer.scheduleAtFixedRate(task,0,1000);
 
     }

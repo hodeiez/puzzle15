@@ -19,7 +19,7 @@ public class Main extends Application {
 TimeCounter tm=new TimeCounter();
 
     Label message = new Label();
-    Label timer=new Label();
+
     Group tiles = new Group();
     Button restart = new Button("NEW GAME");
     Button solve = new Button("SOLVE");
@@ -65,7 +65,7 @@ TimeCounter tm=new TimeCounter();
         buttons.getChildren().addAll(solve, restart, imageSelector);
         buttons.setAlignment(Pos.CENTER);
         message.setAlignment(Pos.CENTER);
-        timer.setAlignment(Pos.CENTER);
+
         gameName.getChildren().add(puzzle15);
 
 //Styling
@@ -86,6 +86,7 @@ TimeCounter tm=new TimeCounter();
 
         tiles.setOnMouseClicked(e -> {
             tilesBoard.moveTiles(e);
+            tm.runTimer(message,tilesBoard.isSolved());
             isSolved(tilesBoard);
 
         });
@@ -114,13 +115,13 @@ TimeCounter tm=new TimeCounter();
 //add stuff to main pane
 
         BorderPane.setAlignment(message, Pos.CENTER);
-        BorderPane.setAlignment(timer, Pos.CENTER);
+//
 
         mainPane.setCenter(tiles);
         mainPane.setBottom(buttons);
         mainPane.setTop(message);
 
-        mainPane.setTop(timer);
+  //
 
         mainPane.setRight(spinners);
         mainPane.setLeft(gameName);
@@ -141,7 +142,6 @@ TimeCounter tm=new TimeCounter();
     public void isSolved(Tiles tilesBoard){
 
         boolean isSolved=tilesBoard.isSolved();
-
         message.setText((isSolved) ? "CONGRATS!! YOU WON" : null);
         
     }
